@@ -1,4 +1,4 @@
-module github.com/whosonfirst/go-whosonfirst-aws-session
+module github.com/aaronland/go-aws-session
 
 go 1.12
 

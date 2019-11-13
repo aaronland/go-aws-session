@@ -12,7 +12,9 @@ import (
 
 func main() {
 	str_dsn := "region=us-east-1 credentials=env:"
-	session.NewSessionWithDSN(str_dsn)
+	sess, err := session.NewSessionWithDSN(str_dsn)
+
+	// do something with sess or err here
 }
 
 ```

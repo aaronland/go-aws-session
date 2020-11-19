@@ -13,7 +13,12 @@ func NewConfigWithCredentials(str_creds string, region string) (*aws.Config, err
 	cfg := aws.NewConfig()
 	cfg.WithRegion(region)
 
-	if strings.HasPrefix(str_creds, "env:") {
+	if strings.HasPrefix(str_creds, "anon:") {
+
+		creds := credentials.AnonymousCredentials
+		cfg.WithCredentials(creds)
+
+	} else if strings.HasPrefix(str_creds, "env:") {
 
 		creds := credentials.NewEnvCredentials()
 		cfg.WithCredentials(creds)

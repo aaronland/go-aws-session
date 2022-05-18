@@ -1,9 +1,35 @@
 package session
 
 import (
+	"fmt"
 	"github.com/aaronland/go-string/dsn"
 	aws_session "github.com/aws/aws-sdk-go/aws/session"
+	"net/url"
 )
+
+func NewSession(uri string) (*aws_session.Session, error) {
+
+	u, err := url.Parse(uri)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to parse URL, %w", err)
+	}
+
+	q := u.Query()
+
+	creds := q.Get("credentials")
+	region := q.Get("region")
+
+	if creds == "" {
+		return nil, fmt.Errorf("Missing ?credentials parameter")
+	}
+
+	if region == "" {
+		return nil, fmt.Errorf("Missing ?region parameter")
+	}
+
+	return NewSessionWithCredentials(creds, region)
+}
 
 func NewSessionWithDSN(dsn_str string) (*aws_session.Session, error) {
 
